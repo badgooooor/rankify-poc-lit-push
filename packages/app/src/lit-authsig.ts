@@ -28,8 +28,9 @@ const ethersSigner = new ethers.Wallet(
 );
 
 const litNodeClient = new LitNodeClient({
-  litNetwork: LitNetwork.DatilTest,
+  litNetwork: LitNetwork.DatilDev,
   debug: false,
+  alertWhenUnauthorized: true, // you can skip this, but this can be helpful during development
 });
 
 export const getSessionSigsViaAuthSig = async (capacityTokenId?: string) => {
@@ -41,7 +42,7 @@ export const getSessionSigsViaAuthSig = async (capacityTokenId?: string) => {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       randomPrivatekey: true,
-      network: LitNetwork.DatilTest,
+      network: LitNetwork.DatilDev,
       debug: true,
     });
     await litContracts.connect();
