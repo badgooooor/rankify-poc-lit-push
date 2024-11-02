@@ -33,7 +33,7 @@ const litNodeClient = new LitNodeClient({
   alertWhenUnauthorized: true, // you can skip this, but this can be helpful during development
 });
 
-export const getSessionSigsViaAuthSig = async (capacityTokenId?: string) => {
+export const getSessionSigsViaAuthSig = async () => {
   try {
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     await litNodeClient.connect();
@@ -48,22 +48,10 @@ export const getSessionSigsViaAuthSig = async (capacityTokenId?: string) => {
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
 
-    if (!capacityTokenId) {
-      console.log("🔄 Minting Capacity Credits NFT...");
-      capacityTokenId = (
-        await litContracts.mintCapacityCreditsNFT({
-          requestsPerKilosecond: 10,
-          daysUntilUTCMidnightExpiration: 1,
-        })
-      ).capacityTokenIdStr;
-      console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
-    }
-
     console.log("🔄 Creating capacityDelegationAuthSig...");
     const { capacityDelegationAuthSig } =
       await litNodeClient.createCapacityDelegationAuthSig({
         dAppOwnerWallet: ethersSigner,
-        capacityTokenId,
         delegateeAddresses: [ethersSigner.address],
         uses: "1",
       });
