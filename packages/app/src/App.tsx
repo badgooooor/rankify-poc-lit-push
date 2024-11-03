@@ -1,18 +1,14 @@
 import "@rainbow-me/rainbowkit/styles.css";
-
-import {
-  ConnectButton,
-  getDefaultConfig,
-  RainbowKitProvider,
-} from "@rainbow-me/rainbowkit";
+import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiProvider } from "wagmi";
 import { sepolia } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-
 import "./App.css";
 import { useEffect } from "react";
 import { chronicleYellowstone, getSessionSigsViaAuthSig } from "./lit-authsig";
-import { SendPushNotificationInput } from "./component/SendPushNotificationInput";
+import { SendPushNotificationInput } from "./components/SendPushNotificationInput";
+import { useSubscribePushNotification } from "./hooks/useSubscribePushNotification";
+import { RootLayout } from "./components/RootLayout";
 
 const config = getDefaultConfig({
   appName: "My RainbowKit App",
@@ -33,15 +29,17 @@ function App() {
     createLitAuthSig();
   }, []);
 
+  useSubscribePushNotification();
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
-          <div className="p-4">Test POC</div>
-          <ConnectButton />
-          <div className="flex flex-row gap-4 p-4">
-            <SendPushNotificationInput />
-          </div>
+          <RootLayout>
+            <div className="flex flex-row gap-4 p-4">
+              <SendPushNotificationInput />
+            </div>
+          </RootLayout>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
