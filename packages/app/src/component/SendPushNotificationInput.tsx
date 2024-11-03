@@ -1,5 +1,7 @@
 import { ChangeEvent, ReactElement, useState } from "react";
 import { useSendPushNotification } from "../hooks/useSendPushNotification";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export const SendPushNotificationInput = (): ReactElement => {
   const [inputText, setInputText] = useState<string>("");
@@ -17,19 +19,14 @@ export const SendPushNotificationInput = (): ReactElement => {
 
   return (
     <div className="flex flex-row gap-4">
-      <input
+      <Input
         type="text"
         value={inputText}
         onChange={handleInputChange}
         className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Enter text"
       />
-      <button
-        onClick={handleButtonClick}
-        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
-        Submit
-      </button>
+      <Button onClick={handleButtonClick}>Submit</Button>
     </div>
   );
 };
