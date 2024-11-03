@@ -1,7 +1,7 @@
-import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
+import { LitNetwork } from "@lit-protocol/constants";
+import { litEtherSigner } from "./instances/signer";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import * as ethers from "ethers";
 import { createSiweMessage, generateAuthSig, LitAbility, LitAccessControlConditionResource } from "@lit-protocol/auth-helpers";
 import { defineChain } from "viem";
 
@@ -21,11 +21,7 @@ export const chronicleYellowstone = defineChain({
       apiUrl: 'https://yellowstone-explorer.litprotocol.com/api'
     },
   },
-})
-const ethersSigner = new ethers.Wallet(
-  import.meta.env.VITE_LIT_SIGNER_PRIVATE_KEY,
-  new ethers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
-);
+});
 
 const litNodeClient = new LitNodeClient({
   litNetwork: LitNetwork.DatilDev,
@@ -51,8 +47,8 @@ export const getSessionSigsViaAuthSig = async () => {
     console.log("🔄 Creating capacityDelegationAuthSig...");
     const { capacityDelegationAuthSig } =
       await litNodeClient.createCapacityDelegationAuthSig({
-        dAppOwnerWallet: ethersSigner,
-        delegateeAddresses: [ethersSigner.address],
+        dAppOwnerWallet: litEtherSigner,
+        delegateeAddresses: [litEtherSigner.address],
         uses: "1",
       });
     console.log(`✅ Created the capacityDelegationAuthSig`);
@@ -77,13 +73,13 @@ export const getSessionSigsViaAuthSig = async () => {
           uri,
           expiration,
           resources: resourceAbilityRequests,
-          walletAddress: await ethersSigner.getAddress(),
+          walletAddress: await litEtherSigner.getAddress(),
           nonce: await litNodeClient.getLatestBlockhash(),
           litNodeClient,
         });
 
         return await generateAuthSig({
-          signer: ethersSigner,
+          signer: litEtherSigner,
           toSign,
         });
       },
