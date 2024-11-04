@@ -13,7 +13,9 @@
     "app:preview": "cd packages/app && bun run preview",
     "listener:dev": "cd packages/backend-listener && bun --watch src/index.ts",
     "listener:build": "cd packages/backend-listener && bun build src/index.ts --target bun --outdir ./dist",
-    "listener:start": "NODE_ENV=production cd packages/backend-listener && bun dist/index.js"
+    "listener:start": "NODE_ENV=production cd packages/backend-listener && bun dist/index.js",
+    "lit:dev":  "cd packages/lit-serverless-action && bun --watch src/index.ts",
+    "lit:build":  "cd packages/lit-serverless-action && bun build src/index.ts --target bun --outdir ./dist"
   },
   "dependencies": {
     "@lit-protocol/auth-helpers": "^6.11.0",
