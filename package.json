@@ -10,7 +10,10 @@
     "app:dev": "cd packages/app && bun run dev",
     "app:build": "cd packages/app && bun run build",
     "app:lint": "cd packages/app && bun run lint",
-    "app:preview": "cd packages/app && bun run preview"
+    "app:preview": "cd packages/app && bun run preview",
+    "listener:dev": "cd packages/backend-listener && bun --watch src/index.ts",
+    "listener:build": "cd packages/backend-listener && bun build src/index.ts --target bun --outdir ./dist",
+    "listener:start": "NODE_ENV=production cd packages/backend-listener && bun dist/index.js"
   },
   "dependencies": {
     "@lit-protocol/auth-helpers": "^6.11.0",
