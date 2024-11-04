@@ -14,7 +14,7 @@ export const SendPushNotificationInput = (): ReactElement => {
   };
 
   const handleButtonClick = () => {
-    mutation.mutate(inputText);
+    mutation.mutate({ message: inputText });
   };
 
   return (

@@ -1,9 +1,9 @@
 import { LitNetwork } from "@lit-protocol/constants";
 import { litEtherSigner } from "./instances/signer";
-import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { createSiweMessage, generateAuthSig, LitAbility, LitAccessControlConditionResource } from "@lit-protocol/auth-helpers";
 import { defineChain } from "viem";
+import { litNodeClient } from "./instances/lit";
 
 export const chronicleYellowstone = defineChain({
   id: 175188,
@@ -21,12 +21,6 @@ export const chronicleYellowstone = defineChain({
       apiUrl: 'https://yellowstone-explorer.litprotocol.com/api'
     },
   },
-});
-
-const litNodeClient = new LitNodeClient({
-  litNetwork: LitNetwork.DatilDev,
-  debug: false,
-  alertWhenUnauthorized: true, // you can skip this, but this can be helpful during development
 });
 
 export const getSessionSigsViaAuthSig = async () => {
